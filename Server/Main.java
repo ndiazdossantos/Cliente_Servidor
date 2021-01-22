@@ -6,11 +6,15 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args){
         try{
+            
+            Scanner sc = new Scanner(System.in);
+            
             System.out.println("Creando socket servidor");
 
             ServerSocket serverSocket=new ServerSocket();
@@ -32,13 +36,29 @@ public class Main {
             byte[] mensaje=new byte[25];
             byte[] mensaje2=new byte[25];
             byte[] mensaje3=new byte[25];
-            
+             
             is.read(mensaje);
             System.out.println("Mensaje recibido: "+new String(mensaje));
+            
+            
+            System.out.println("Introduce Contestacion1");
+            String contestacion1 = sc.nextLine();
+            os.write(contestacion1.getBytes());
+            
             is.read(mensaje2);
             System.out.println("Mensaje2 recibido: "+new String(mensaje2));
+            
+            System.out.println("Introduce Contestacion1");
+            String contestacion2 = sc.nextLine();
+            os.write(contestacion2.getBytes());
+            
             is.read(mensaje3);
             System.out.println("Mensaje3 recibido: "+new String(mensaje3));
+            
+            System.out.println("Introduce Contestacion3");
+            String contestacion3 = sc.nextLine();
+            os.write(contestacion1.getBytes());
+            
 
 
             System.out.println("Cerrando el nuevo socket");
