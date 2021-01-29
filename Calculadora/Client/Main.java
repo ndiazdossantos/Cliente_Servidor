@@ -1,5 +1,7 @@
 package Client;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,18 +23,21 @@ public class Main {
 
             InetSocketAddress addr = new InetSocketAddress("192.168.56.2", 6666);
             clienteSocket.connect(addr);
-
+           
+            /*
             InputStream is = clienteSocket.getInputStream();
             OutputStream os = clienteSocket.getOutputStream();
+            */
+            
+            // utilizamos la clase DataInputStream para trabajar directamente con los tipos de datos primitivos (documentación en acceso a datos)
+           
+            DataInputStream is = new DataInputStream(clienteSocket.getInputStream());
+            DataOutputStream os = new DataOutputStream(clienteSocket.getOutputStream());
           
 
             System.out.println("Enviando mensaje");
             
-                        
-            
-            
             ArrayList<Integer>list = new ArrayList<>();
-            
             System.out.println("Introduce numero1");
             int numero1=sc.nextInt();
             System.out.println("Introduce numero2");
@@ -43,8 +48,6 @@ public class Main {
             int numero4=sc.nextInt();
             System.out.println("Introduce numero5");
             int numero5=sc.nextInt();
-            System.out.println("Introduce que operación deseas: suma,resta,multiplicacion,division");
-            String operacion = sc.nextLine();
             
             list.add(numero1);
             list.add(numero2);
@@ -52,16 +55,22 @@ public class Main {
             list.add(numero4);
             list.add(numero5);
             
+            // cada vez que usemos un writeInt vamos a tener que usar un readInt
             for(int i=0;i<list.size();i++){
-                os.write(list.get(i));
+                os.writeInt(list.get(i));
             }
             
-          
-            // leer mensaje del servidor (operación)
-            byte[] mensaje = new byte[30];
-            is.read(mensaje);
-            System.out.println("Mensaje recibido: "+new String (mensaje));
+           // int mensaje=is.readInt();
+           // System.out.println("Mensaje recibido: "+mensaje);
             
+            
+         
+            System.out.println("Teclee Nº \n1 Suma  \n2 Resta \n3 Multicplicación \n4 División");
+            int opcion =sc.nextInt();
+            os.writeInt(opcion);
+            
+            int mensaje2 =is.readInt();
+            System.out.println("Resultado operación: "+mensaje2);
             System.out.println("Mensaje enviado");
 
             System.out.println("Cerrando el socket cliente");
