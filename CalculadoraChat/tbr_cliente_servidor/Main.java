@@ -87,6 +87,7 @@ public class Main {
             do {
                 st = (String) bufferDeEntrada.readUTF();
                 mostrarTexto("\n[Servidor]: " + st);
+                System.out.print("\n[Cliente]: ");
             } while (!st.equals(COMANDO_TERMINACION));
         } catch (IOException e) {
         }
@@ -132,18 +133,23 @@ public class Main {
            
                    
             opcion1 = Integer.parseInt(JOptionPane.showInputDialog("Introduce que deseas realizar: "+
-                    "\n1 Operaciones"+ 
-                    "\n2 Hablar"));
+                    "\n1 Operaciones "+ 
+                    "\n2 Hablar " +
+                    "\n3 Cerrar Conexión"));
            // System.out.println("Introduce que deseas realizar \n1 Operaciones \n2 Hablar");
            // int opcion1 = sc.nextInt();
             os.writeInt(opcion1);
-
-            if (opcion1 == 1) {
+  
+            
+            switch (opcion1) {
+                
+                case 1:
+                    
                 System.out.println("Enviando mensaje");
 
                 ArrayList<Integer> list = new ArrayList<>();
-                numero1= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero1: "));
-                numero2= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero2: "));
+                numero1= Integer.parseInt(JOptionPane.showInputDialog("1er Operando: "));
+                numero2= Integer.parseInt(JOptionPane.showInputDialog("2do Operand: "));
              /*   numero3= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero3: "));
                 numero4= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero4: "));
                 numero5= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero5: "));
@@ -186,8 +192,10 @@ public class Main {
             //   JOptionPane.showMessageDialog(null,"Resultado operación: " + mensaje2);
                System.out.println("Mensaje enviado");
                
+               break;
               
-            } else {
+                case 2:
+                    
                 Main cliente = new Main();
                 Scanner escaner = new Scanner(System.in);
                 mostrarTexto("Ingresa la IP: ");
@@ -197,17 +205,31 @@ public class Main {
                 String puerto = escaner.nextLine();
                 cliente.ejecutarConexion(ip, Integer.parseInt(puerto));
                 cliente.escribirDatos();
-
-            }
-
+            
+                break;
+                
+                case 3:
+                    
             System.out.println("Cerrando el socket cliente");
 
             clienteSocket.close();
 
             System.out.println("Terminado");
+            
+            break;
+             
+            }
 
+             System.out.println("Cerrando el socket cliente");
+
+            clienteSocket.close();
+
+            System.out.println("Terminado");
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        
     }
 }

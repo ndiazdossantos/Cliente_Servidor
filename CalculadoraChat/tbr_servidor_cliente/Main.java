@@ -177,9 +177,8 @@ public class Main {
                     os2.writeInt(resultado);
                     break;
                 case 2:
-                    //resta no operativa ya que se partiria de 0
                     for(int i = 0; i<2; i++){
-                    resultado = resultado-mensaje[i];   
+                    resultado = mensaje[0]-mensaje[1];   
                     }
                     os2.writeInt(resultado);
                     break;
@@ -192,9 +191,8 @@ public class Main {
                     break;
                   
                 case 4:
-                      //division no operativa y que el divisor sería 0
                     for(int i = 0; i<2; i++){
-                    resultado = resultado/mensaje[i];   
+                    resultado = mensaje[0]/mensaje[1];   
                     }
                     os2.writeInt(resultado);
                     break;
