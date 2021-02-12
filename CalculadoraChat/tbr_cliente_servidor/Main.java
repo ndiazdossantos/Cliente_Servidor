@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -95,8 +96,7 @@ public class Main {
     public void escribirDatos() {
         String entrada = "";
         while (true) {
-            System.out.print("[Cliente]: ");
-            entrada = teclado.nextLine();
+             entrada = JOptionPane.showInputDialog("Escribe mensaje al servidor: ");
             if (entrada.length() > 0) {
                 enviar(entrada);
             }
@@ -122,32 +122,49 @@ public class Main {
             // utilizamos la clase DataInputStream para trabajar directamente con los tipos de datos primitivos (documentación en acceso a datos)
             DataInputStream is = new DataInputStream(clienteSocket.getInputStream());
             DataOutputStream os = new DataOutputStream(clienteSocket.getOutputStream());
-
-            System.out.println("Introduce que deseas realizar \n1 Operaciones \n2 Hablar");
-            int opcion1 = sc.nextInt();
+           
+            int opcion1;
+            int opcion;
+            int numero1;
+            int numero2;
+            int numero3;
+            int numero4;
+            int numero5;
+           
+                   
+            opcion1 = Integer.parseInt(JOptionPane.showInputDialog("Introduce que deseas realizar: "+
+                    "\n1 Operaciones"+ 
+                    "\n2 Hablar"));
+           // System.out.println("Introduce que deseas realizar \n1 Operaciones \n2 Hablar");
+           // int opcion1 = sc.nextInt();
             os.writeInt(opcion1);
 
             if (opcion1 == 1) {
                 System.out.println("Enviando mensaje");
 
                 ArrayList<Integer> list = new ArrayList<>();
-                System.out.println("Introduce numero1");
-                int numero1 = sc.nextInt();
-                System.out.println("Introduce numero2");
-                int numero2 = sc.nextInt();
-                System.out.println("Introduce numero3");
-                int numero3 = sc.nextInt();
-                System.out.println("Introduce numero4");
-                int numero4 = sc.nextInt();
-                System.out.println("Introduce numero5");
-                int numero5 = sc.nextInt();
+                numero1= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero1: "));
+                numero2= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero2: "));
+             /*   numero3= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero3: "));
+                numero4= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero4: "));
+                numero5= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero5: "));
+             */      
+              //  int numero1 = sc.nextInt();
+              //  System.out.println("Introduce numero2");
+              //  int numero2 = sc.nextInt();
+              //  System.out.println("Introduce numero3");
+              //  int numero3 = sc.nextInt();
+              //  System.out.println("Introduce numero4");
+              //  int numero4 = sc.nextInt();
+              //  System.out.println("Introduce numero5");
+              //  int numero5 = sc.nextInt();
 
                 list.add(numero1);
                 list.add(numero2);
-                list.add(numero3);
+              /*  list.add(numero3);
                 list.add(numero4);
                 list.add(numero5);
-
+*/
                 // cada vez que usemos un writeInt vamos a tener que usar un readInt
                 for (int i = 0; i < list.size(); i++) {
                     os.writeInt(list.get(i));
@@ -155,14 +172,22 @@ public class Main {
 
                 // int mensaje=is.readInt();
                 // System.out.println("Mensaje recibido: "+mensaje);
-                System.out.println("Teclee Nº \n1 Suma  \n2 Resta \n3 Multicplicación \n4 División");
-                int opcion = sc.nextInt();
+               // System.out.println("Teclee Nº \n1 Suma  \n2 Resta \n3 Multicplicación \n4 División");
+               // int opcion = sc.nextInt();
+             opcion = Integer.parseInt(JOptionPane.showInputDialog("Teclee Nº: "+
+                     "\n1 Suma "+  
+                     "\n2 Resta "+
+                     "\n3 Multicplicación "+ 
+                     "\n4 División "));
+               
                 os.writeInt(opcion);
 
                 int mensaje2 = is.readInt();
                 System.out.println("Resultado operación: " + mensaje2);
-                System.out.println("Mensaje enviado");
-
+            //   JOptionPane.showMessageDialog(null,"Resultado operación: " + mensaje2);
+               System.out.println("Mensaje enviado");
+               
+              
             } else {
                 Main cliente = new Main();
                 Scanner escaner = new Scanner(System.in);

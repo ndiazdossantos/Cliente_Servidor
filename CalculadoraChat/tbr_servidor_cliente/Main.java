@@ -1,4 +1,4 @@
-package Server;
+package tbr_servidor_cliente;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -9,6 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -68,9 +69,10 @@ public class Main {
     }
 
     public void escribirDatos() {
+        String entrada1 = "";
         while (true) {
-            System.out.print("[Cliente] : ");
-            enviar(escaner.nextLine());   
+            entrada1 = JOptionPane.showInputDialog("Escribe mensaje al cliente: ");
+            enviar(entrada1);   
         }
     }
 
@@ -151,14 +153,14 @@ public class Main {
 
            
             int opcion1 = is2.readInt(); 
-            int[] mensaje = new int [5];
+            int[] mensaje = new int [2];
             
             //seleccionamos la opción
             
             if(opcion1==1){
             
             
-            for (int i = 0; i<5; i++){
+            for (int i = 0; i<2; i++){
              mensaje[i]= is2.readInt();
             }
          
@@ -170,21 +172,21 @@ public class Main {
             int resultado = 0;
             switch (opcion){
                 case 1:
-                    for(int i = 0; i<5; i++){
+                    for(int i = 0; i<2; i++){
                     resultado = resultado+mensaje[i];   
                     }
                     os2.writeInt(resultado);
                     break;
                 case 2:
                     //resta no operativa ya que se partiria de 0
-                    for(int i = 0; i<5; i++){
+                    for(int i = 0; i<2; i++){
                     resultado = resultado-mensaje[i];   
                     }
                     os2.writeInt(resultado);
                     break;
                 case 3:
                     resultado=1;
-                    for(int i = 0; i<5; i++){
+                    for(int i = 0; i<2; i++){
                     resultado = resultado*mensaje[i];   
                     }
                     os2.writeInt(resultado);
@@ -192,7 +194,7 @@ public class Main {
                   
                 case 4:
                       //division no operativa y que el divisor sería 0
-                    for(int i = 0; i<5; i++){
+                    for(int i = 0; i<2; i++){
                     resultado = resultado/mensaje[i];   
                     }
                     os2.writeInt(resultado);
