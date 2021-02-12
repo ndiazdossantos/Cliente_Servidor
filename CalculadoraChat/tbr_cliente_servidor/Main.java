@@ -87,7 +87,6 @@ public class Main {
             do {
                 st = (String) bufferDeEntrada.readUTF();
                 mostrarTexto("\n[Servidor]: " + st);
-                System.out.print("\n[Cliente]: ");
             } while (!st.equals(COMANDO_TERMINACION));
         } catch (IOException e) {
         }
