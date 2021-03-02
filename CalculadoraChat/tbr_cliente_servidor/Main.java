@@ -17,7 +17,7 @@ public class Main {
     private DataInputStream bufferDeEntrada = null;
     private DataOutputStream bufferDeSalida = null;
     Scanner teclado = new Scanner(System.in);
-    final String COMANDO_TERMINACION = "salir()";
+    final String COMANDO_TERMINACION = "exit()";
 
     public void levantarConexion(String ip, int puerto) {
         try {
@@ -87,7 +87,6 @@ public class Main {
             do {
                 st = (String) bufferDeEntrada.readUTF();
                 mostrarTexto("\n[Servidor]: " + st);
-                System.out.print("\n[Cliente]: ");
             } while (!st.equals(COMANDO_TERMINACION));
         } catch (IOException e) {
         }
@@ -104,6 +103,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+       
         try {
 
             Scanner sc = new Scanner(System.in);
@@ -115,11 +115,7 @@ public class Main {
             InetSocketAddress addr = new InetSocketAddress("192.168.56.2", 6666);
             clienteSocket.connect(addr);
 
-            /*
-            InputStream is = clienteSocket.getInputStream();
-            OutputStream os = clienteSocket.getOutputStream();
-             */
-            // utilizamos la clase DataInputStream para trabajar directamente con los tipos de datos primitivos (documentación en acceso a datos)
+         
             DataInputStream is = new DataInputStream(clienteSocket.getInputStream());
             DataOutputStream os = new DataOutputStream(clienteSocket.getOutputStream());
            
@@ -130,16 +126,19 @@ public class Main {
             int numero3;
             int numero4;
             int numero5;
-           
+            
+            do{
                    
             opcion1 = Integer.parseInt(JOptionPane.showInputDialog("Introduce que deseas realizar: "+
                     "\n1 Operaciones "+ 
                     "\n2 Hablar " +
                     "\n3 Cerrar Conexión"));
-           // System.out.println("Introduce que deseas realizar \n1 Operaciones \n2 Hablar");
-           // int opcion1 = sc.nextInt();
+       
             os.writeInt(opcion1);
   
+            
+                
+            
             
             switch (opcion1) {
                 
@@ -150,35 +149,16 @@ public class Main {
                 ArrayList<Integer> list = new ArrayList<>();
                 numero1= Integer.parseInt(JOptionPane.showInputDialog("1er Operando: "));
                 numero2= Integer.parseInt(JOptionPane.showInputDialog("2do Operand: "));
-             /*   numero3= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero3: "));
-                numero4= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero4: "));
-                numero5= Integer.parseInt(JOptionPane.showInputDialog("Introduce numero5: "));
-             */      
-              //  int numero1 = sc.nextInt();
-              //  System.out.println("Introduce numero2");
-              //  int numero2 = sc.nextInt();
-              //  System.out.println("Introduce numero3");
-              //  int numero3 = sc.nextInt();
-              //  System.out.println("Introduce numero4");
-              //  int numero4 = sc.nextInt();
-              //  System.out.println("Introduce numero5");
-              //  int numero5 = sc.nextInt();
+         
 
                 list.add(numero1);
                 list.add(numero2);
-              /*  list.add(numero3);
-                list.add(numero4);
-                list.add(numero5);
-*/
+         
                 // cada vez que usemos un writeInt vamos a tener que usar un readInt
                 for (int i = 0; i < list.size(); i++) {
                     os.writeInt(list.get(i));
                 }
 
-                // int mensaje=is.readInt();
-                // System.out.println("Mensaje recibido: "+mensaje);
-               // System.out.println("Teclee Nº \n1 Suma  \n2 Resta \n3 Multicplicación \n4 División");
-               // int opcion = sc.nextInt();
              opcion = Integer.parseInt(JOptionPane.showInputDialog("Teclee Nº: "+
                      "\n1 Suma "+  
                      "\n2 Resta "+
@@ -189,7 +169,7 @@ public class Main {
 
                 int mensaje2 = is.readInt();
                 System.out.println("Resultado operación: " + mensaje2);
-            //   JOptionPane.showMessageDialog(null,"Resultado operación: " + mensaje2);
+           
                System.out.println("Mensaje enviado");
                
                break;
@@ -197,13 +177,13 @@ public class Main {
                 case 2:
                     
                 Main cliente = new Main();
+                
                 Scanner escaner = new Scanner(System.in);
-                mostrarTexto("Ingresa la IP: ");
-                String ip = escaner.nextLine();
-
-                mostrarTexto("Puerto: ");
+                mostrarTexto("Ingrese Puerto: ");
                 String puerto = escaner.nextLine();
-                cliente.ejecutarConexion(ip, Integer.parseInt(puerto));
+               
+                
+                cliente.ejecutarConexion("192.168.56.2",  Integer.parseInt(puerto));
                 cliente.escribirDatos();
             
                 break;
@@ -219,12 +199,10 @@ public class Main {
             break;
              
             }
-
-             System.out.println("Cerrando el socket cliente");
-
-            clienteSocket.close();
-
-            System.out.println("Terminado");
+            
+        }while(opcion1!=3);
+            
+            
             
         } catch (IOException e) {
             e.printStackTrace();
